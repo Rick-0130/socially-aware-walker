@@ -69,7 +69,7 @@ if [ $# -gt 0 ]; then
             --device=/dev/nvhost-gpu \
             --device=/dev/nvhost-as-gpu \
             -v /dev/bus/usb:/dev/bus/usb \
-            coolcat647/walker-docker:${DOCKER_TAG}      
+            rick-walker-docker:${DOCKER_TAG}      
     fi
 else
     echo "please provide docker tag name."

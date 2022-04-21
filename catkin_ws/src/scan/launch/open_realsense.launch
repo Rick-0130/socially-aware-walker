@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- RealSense Camera -->
+  <include file="$(find realsense2_camera)/launch/rs_rgbd.launch">
+  </include>
+  <!-- rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find realsense2_camera)/../../subgoal_timer_interval.rviz" />
+  <!-- pointscloud filter -->
+  <node name="realsense_node" pkg="scan" type="realsense_node" required="true" output="screen" />
+
+  <!-- Static transformation -->
+  <!-- Camera Laserscan calibration result: -->
+  <node name="camera2base" pkg="tf" type="static_transform_publisher" 
+            args="0.41 0 0.535 0  -0.08  0    
+            /base_link /camera_link 20"/>
+
+</launch>

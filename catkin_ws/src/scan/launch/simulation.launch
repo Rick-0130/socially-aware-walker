@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    
+
+    <!-- pointclouds filtering -->
+    <node name="scan2localmap_node_simulation" pkg="scan" type="scan2localmap_node_simulation" required="true" output="screen" />
+
+    <!-- Multi-Object Tracking onde -->
+    <node name="path_finding_node_simulation" pkg="scan" type="path_finding_node_simulation" required="true" output="screen" />
+
+   
+</launch>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <!-- Yolo v4 detection -->
+    <node name="yolov4_node" pkg="yolov4_pytorch" type="detection_node_test.py" required="true" /> 
+
+    <!-- Combine pointclouds and image detection result -->
+    <node name="scan_image_combine_node_test" pkg="scan" type="scan_image_combine_node_test" required="true" output="screen" />
+
+    <!-- pointclouds filtering -->
+    <node name="scan_node_test" pkg="scan" type="scan_node_test" required="true" output="screen" />
+
+    <!-- Multi-Object Tracking onde -->
+    <node name="mot2d_node_test" pkg="multi_object_tracking" type="mot2d_node_test.py" required="true" output="screen" />
+
+   
+</launch>

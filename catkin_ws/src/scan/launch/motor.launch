@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <!-- motor -->
+    
+    <arg name="motor_disable" default="false" />
+    <arg name="serial_device" default="/dev/walker_motor_driver" />
+    <arg name="command_interval" default="0.1" doc="car command publishing time interval"/>
+    <arg name="watchdog_interval" default="0.5" doc="zero-velocity command publishing time interval which is designed for robot safety." />
+
+    <node name="differential_drive_node" pkg="mcbl3006s_drivers" type="differential_drive_node" required="true">
+        <param name="motor_disable" value="$(arg motor_disable)" />
+        <param name="serial_device" value="$(arg serial_device)" />
+        <param name="command_interval" value="$(arg command_interval)" />
+        <param name="watchdog_interval" value="$(arg watchdog_interval)" />
+    </node>
+
+
+    <!-- odom_filtered_tf
+    <node name="odom_filtered_node" pkg="mcbl3006s_drivers" type="odom_filtered_node" required="true" output="screen" /> -->
+    
+
+    <!-- odom_filtered -->
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
+    <rosparam command="load" file="$(find robot_localization)/params/ekf_walker.yaml" />
+    
+    
+    
+
+    <!--  Placeholder for output topic remapping
+    <remap from="odometry/filtered" to=""/>
+    <remap from="accel/filtered" to=""/>
+    -->
+
+  </node>
+   
+</launch>

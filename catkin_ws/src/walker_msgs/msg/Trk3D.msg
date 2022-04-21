@@ -6,3 +6,7 @@ float32 yaw
 float32 radius
 float32 confidence
 int8 class_id
+float32 dangerous
+float32 x_based
+float32 y_based
+float32 z_based

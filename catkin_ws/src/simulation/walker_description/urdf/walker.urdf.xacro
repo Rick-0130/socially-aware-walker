@@ -2,12 +2,14 @@
 <robot name="walker" xmlns:xacro="http://ros.org/wiki/xacro">
     <!-- <xacro:arg name="robot_namespace" default="/" />  -->
     <xacro:arg name="robot_namespace" default="walker" />
+    <xacro:arg name="realsense_enabled" default="1" />
 
     <!-- Included URDF/XACRO Files -->
     <xacro:include filename="$(find walker_description)/urdf/accessories/webcam_c930e.urdf.xacro"/>
     <xacro:include filename="$(find walker_description)/urdf/accessories/ydlidar_g4.urdf.xacro" />
     <xacro:include filename="$(find walker_description)/urdf/accessories/estop.urdf.xacro" />
-
+    <!-- <xacro:include filename="$(find walker_description)/urdf/accessories/intel_realsense.urdf.xacro"/> -->
+    
     <!-- Gazebo plugin -->
     <xacro:include filename="$(find walker_description)/urdf/walker.gazebo" />
 
@@ -288,6 +290,18 @@
         <axis xyz="0 0 0" />
     </joint>
     
+    <!-- Intel realsense D435 -->
+    <xacro:if value="$(arg realsense_enabled)">
+    <xacro:include filename="$(find walker_description)/urdf/accessories/intel_realsense.urdf.xacro"/>
+        <xacro:intel_realsense_mount prefix="camera1" topic="camera1" parent_link="realsense_mount"/>
+        
+        <link name="realsense_mount"/>
+        <joint name="realsense_mount_joint" type="fixed">
+        <origin xyz="0 0 0.012" rpy="0 0 ${-M_PI}" />
+        <parent link="laser_link"/>
+        <child link="realsense_mount" />
+        </joint>
+    </xacro:if>
 
     <!-- YDLiDAR G4 plugin -->
     <xacro:ydlidar_g4 frame="laser" topic="scan" min_angle="${M_PI / 4}" max_angle="${M_PI / 4 * 7}" robot_namespace="$(arg robot_namespace)"/>
@@ -297,7 +311,7 @@
         <child link="laser_base" />
     </joint>
 
-
+    
     <!-- Logitech C930e webcam -->
     <xacro:webcam_c930e frame="camera" topic="usb_cam" robot_namespace="$(arg robot_namespace)"/>
     <joint name="webcam_mount_joint" type="fixed">
